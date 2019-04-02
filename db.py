@@ -2,19 +2,18 @@
 import psycopg2
 
 try:
-    DB_CONN = psycopg2.connect(user="sco_dbo",
+    db_conn = psycopg2.connect(user="sco_dbo",
                                password="Talisker10",
-                               host="localhost",
+                               host="127.0.0.1",
                                port="5432",
                                database="scotcher")
-    CURSOR = DB_CONN.CURSOR()
-    CURSOR.execute("SELECT * FROM tb_whisky;")
-    RECORD = CURSOR.fetchone()
-    print(RECORD)
+    cursor = db_conn.cursor()
+    cursor.execute("SELECT name, distillery, region, age, abv, notes FROM tb_whisky;")
+    record = cursor.fetchone()
 
 except(Exception, psycopg2.Error) as error:
     print("error while connecting to database", error)
 finally:
-    if DB_CONN:
-        CURSOR.close()
-        DB_CONN.close()
+    if db_conn:
+        cursor.close()
+        db_conn.close()

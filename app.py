@@ -1,7 +1,6 @@
-"""Base Flask App"""
+"""Base Flask app"""
 import psycopg2
 from flask import Flask, g
-
 app = Flask(__name__)
 
 def conn_sql():
@@ -11,7 +10,7 @@ def conn_sql():
         try:
             db_conn = g._db_conn = psycopg2.connect(user="sco_dbo",
                                                     password="Talisker10",
-                                                    host="localhost",
+                                                    host="127.0.0.1",
                                                     port="5432",
                                                     database="scotcher")
         except(Exception, psycopg2.Error) as error:
@@ -27,15 +26,18 @@ def exec_sql(sql):
     db_cur.close()
     return record
 
-def discon_sql():
+@app.teardown_appcontext
+def discon_sql(exception):
     """Disconnect connection"""
     db_conn = getattr(g, '_db_conn', None)
-    if db_conn:
+    if db_conn is not None:
         db_conn.close()
 
 @app.route('/')
 def home():
     """Main Page"""
-    bottles = exec_sql("SELECT name, distillery, region, age, abc, notes FROM tb_whisky")
-    return bottles
-    
+    bottles = exec_sql("SELECT name, distillery, region, age, abv, notes FROM tb_whisky")
+    return str(bottles)
+
+if __name__ == "__main__":
+    app.run()
