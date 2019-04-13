@@ -12,15 +12,6 @@ def conn_sql():
             print("error while connecting to database", error)
     return db_conn
 
-def exec_sql(sql):
-    """Execute given SQL statement"""
-    db_conn = conn_sql()
-    db_cur = db_conn.cursor()
-    db_cur.execute(sql)
-    record = db_cur.fetchall()
-    db_cur.close()
-    return record
-
 def discon_sql(exception):
     """Disconnect connection"""
     db_conn = getattr(g, '_db_conn', None)

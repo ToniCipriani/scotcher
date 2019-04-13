@@ -27,11 +27,7 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    @app.route('/hello')
-    def hello():
-        """Main Page"""
-        sql_str = "SELECT w.name, d.name AS distillery, d.region, d.country, w.age, w.abv, w.notes FROM tb_whisky w JOIN tb_distillery d ON w.distillery = d.id"
-        bottles = db.exec_sql(sql_str)
-        return str(bottles)
+    from. import auth
+    app.register_blueprint(auth.bp)
 
     return app
