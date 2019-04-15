@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Bottles{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('bottle.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for bottle in bottles %}
+    <article class="bottle">
+      <header>
+        <div>
+          <h1>{{ bottle[3] }} {{ bottle[2] }}</h1>
+          <div class="about">Region:{{ bottle[4] }}<br>Country: {{ bottle[5] }}<br>Owner: {{ bottle[1] }}</div>
+        </div>
+        {% if g.user['id'] == bottle[1] %}
+          <a class="action" href="{{ url_for('bottle.update', id=bottle[0]) }}">Update</a>
+        {% endif %}
+      </header>
+      <p class="notes">Tasting Notes:<br>{{ bottle[8] }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
