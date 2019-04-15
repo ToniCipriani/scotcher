@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Bottle Listing{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="name">Name</label>
+    <input name="name" id="name" value="{{ request.form['name'] }}" required>
+	<label for="distillery">Distillery</label>
+    <input name="distillery" id="distillery" value="{{ request.form['distillery'] }}" required>
+    <label for="age">Age Statement</label>
+    <input name="age" id="age" value="{{ request.form['age'] }}" required>
+    <label for="abv">ABV</label>
+    <input name="abv" id="abv" value="{{ request.form['abv'] }}" required>
+    <label for="notes">Notes</label>
+    <textarea name="notes" id="notes">{{ request.form['notes'] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}

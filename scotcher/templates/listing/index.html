@@ -3,7 +3,7 @@
 {% block header %}
   <h1>{% block title %}Bottles{% endblock %}</h1>
   {% if g.user %}
-    <a class="action" href="{{ url_for('bottle.create') }}">New</a>
+    <a class="action" href="{{ url_for('listing.create') }}">New</a>
   {% endif %}
 {% endblock %}
 
@@ -13,12 +13,13 @@
       <header>
         <div>
           <h1>{{ bottle[3] }} {{ bottle[2] }}</h1>
-          <div class="about">Region:{{ bottle[4] }}<br>Country: {{ bottle[5] }}<br>Owner: {{ bottle[1] }}</div>
+          
         </div>
-        {% if g.user['id'] == bottle[1] %}
-          <a class="action" href="{{ url_for('bottle.update', id=bottle[0]) }}">Update</a>
+        {% if g.user[1] == bottle[1] %}
+          <a class="action" href="{{ url_for('listing.update', bottle_id=bottle[0]) }}">Update</a>
         {% endif %}
       </header>
+	  <div class="about">Region: {{ bottle[4] }}<br>Country: {{ bottle[5] }} <br>Age: {{ bottle[6] }}<br>ABV: {{ "%03.2f"|format(bottle[7]*100) }}%<br>Owner: {{ bottle[1] }}</div>
       <p class="notes">Tasting Notes:<br>{{ bottle[8] }}</p>
     </article>
     {% if not loop.last %}

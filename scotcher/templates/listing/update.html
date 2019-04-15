@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Editing "{{ bottle[3] }} {{ bottle[2] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="name">Name</label>
+    <input name="name" id="name"
+      value="{{ request.form['name'] or bottle[2] }}" required>
+    <label for="distillery">Distillery</label>
+    <input name="distillery" id="distillery" value="{{ request.form['distillery'] or bottle[3]}}" required>
+    <label for="age">Age Statement</label>
+    <input name="age" id="age" value="{{ request.form['age'] or bottle[6]}}" required>
+    <label for="abv">ABV</label>
+    <input name="abv" id="abv" value="{{ request.form['abv'] or bottle[7]}}" required>
+	<label for="notes">Tasting Notes</label>
+    <textarea name="notes" id="notes">{{ request.form['notes'] or bottle[8] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('listing.delete', bottle_id=bottle[0]) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}
