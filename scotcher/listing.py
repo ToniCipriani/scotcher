@@ -29,4 +29,3 @@ def index():
     bottles = db_cur.fetchall()
     db_cur.close()
     return render_template('listing/index.html',bottles=bottles)
-
