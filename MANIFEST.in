@@ -1,0 +1,3 @@
+graft scotcher/static
+graft scotcher/templates
+global-exclude *.pyc
